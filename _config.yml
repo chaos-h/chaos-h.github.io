@@ -80,6 +80,7 @@ deploy:
   - type: git
     repository: git@github.com:chaos-h/chaos-h.github.io.git
     branch: master
+  - type: baidu_url_submitter #百度
 
 # hou liang huan
 # search

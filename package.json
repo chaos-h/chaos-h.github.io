@@ -3,12 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "hexo": {
-    "version": "3.8.0"
+    "version": "3.9.0"
   },
   "dependencies": {
     "eslint": "^5.16.0",
-    "hexo": "^3.8.0",
-    "hexo-blog-encrypt": "^2.1.1",
+    "hexo": "^3.9.0",
+    "hexo-baidu-url-submit": "0.0.6",
+    "hexo-blog-encrypt": "^2.2.2",
     "hexo-deployer-git": "^1.0.0",
     "hexo-footnotes": "^1.0.2",
     "hexo-generator-archive": "^0.1.5",
@@ -19,5 +20,9 @@
     "hexo-renderer-marked": "^1.0.1",
     "hexo-renderer-stylus": "^0.3.3",
     "hexo-server": "^0.3.3"
+  },
+  "devDependencies": {
+    "hexo-generator-baidu-sitemap": "^0.1.6",
+    "hexo-generator-sitemap": "^1.2.0"
   }
 }
