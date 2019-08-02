@@ -81,7 +81,7 @@ $ git push origin BackUp # 提交到github 仓库
 这样下次备份的时候就更加方便, 只要执行下面指令
 
 ```
-$ git add
+$ git add .
 $ git commit -m "Messages you want to commit"
 $ git push origin BackUp
 ```
@@ -100,11 +100,10 @@ $ git clone git@github.com:yourGithubID/yourGithubID.github.io.git
 4. 在克隆的文件夹下面, 输入如下命令来恢复博客:
 
 ```
-$ npm install hexo-cli
 $ npm install
-$ npm install hexo-deployer-git
 ```
 
+因为我们备份了`packadge.json`文件，上诉命令会直接安装里面`dependencies` 和`DevDependecies`里面的插件， 安装完之后可以试运行看看是否备份成功。如果提示`hexo command not found` ，可单独安装hexo，`npm install -g hexo`.  
 不需要这行`hexo init`指令, 因为并不是从零开始搭建博客.
 
 ---
