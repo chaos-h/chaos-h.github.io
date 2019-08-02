@@ -116,6 +116,26 @@ npm install
 因为我们备份了`packadge.json`文件，上诉命令会直接安装里面`dependencies` 和`DevDependecies`里面的插件， 安装完之后可以试运行看看是否备份成功。如果提示`hexo command not found` ，可单独安装hexo，`npm install -g hexo`.  
 不需要这行`hexo init`指令, 因为并不是从零开始搭建博客.
 
+## npm 安装小知识
+
+```bash
+npm install packageName #本地安装，安装到项目目录下，不在package.json中写入依赖
+npm install packageName -g #全局安装，安装在Node安装目录下的node_modules下
+npm install packageName --save #安装到项目目录的node_modules下，并在package.json文件的dependencies中写入依赖，简写为-S
+npm install packageName --save-dev #安装到项目目录下，并在package.json文件的devDependencies中写入依赖，简写为-D
+
+## 如果目录下有package.json 文件
+npm install # 自动批量安装dependencies 和 devDependencies中的包
+npm install --production # 只安装dependencies中的包
+
+
+## 卸载更新
+npm uninstall -g <package> # 删除某个全局包
+npm updatge -g #更新全部全局包
+npm update -g <package> #更新某个包 
+```
+
+
 ---
 
 ## 参考文献

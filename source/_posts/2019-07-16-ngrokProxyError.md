@@ -14,7 +14,7 @@ tags: 内网穿透
 
 ```yml
 ERROR:  Invalid configuration property value for 'http_proxy', '127.0.0.1:1080': parse 127.0.0.1:1080: first path segment in URL cannot contain colon
-```  
+```
 
 ## 问题原因  
 
@@ -26,7 +26,7 @@ ERROR:  Invalid configuration property value for 'http_proxy', '127.0.0.1:1080':
 
 在配置文件里面修改http代理设置, 各个系统配置文件`ngrok.yml`的位置如下,将下面的*username*替换成你自己的用户名:  
 
-```yml 
+```yml
 OSX    /Users/username/.ngrok2/ngrok.yml
 Linux  /home/uername/.ngrok2/ngrok.yml
 Windos C:\Users\example\.ngrok2\ngrok.yml
