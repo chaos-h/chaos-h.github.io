@@ -6,14 +6,17 @@ categories: 博客
 ---
 
 主要是记录一些有用的东西, 方便日后查找.建站是hexo+github+next主题.  
+
 ## 站点配置
 
 ### 站点配置文件  
 
 在Hexo中有两份主要的配置文件，其名称都是\_config.yml. 其中，一份位于站点根目录下，主要包含 Hexo 本身的配置；另一份位于主题目录下，这份配置由主题作者提供，主要用于配置主题相关的选项.  
 
-1. 站点配置  
+#### 站点配置部分
+
 站点配置主要包含以下几个内容:  
+
 - 站点基本信息:配置自己网站的名字,副标题, 描述, 作者,语言,时区
 - URL: 配置自己站点域名等信息
 - 站点目录
@@ -24,7 +27,8 @@ categories: 博客
 - 主题、插件
 - 站点部署
 
-2. 主题配置  
+#### 主题配置部分
+
 [安装next主题](https://theme-next.org/docs/getting-started/)之后, 可通过修改主题配置文件`themes\next\_config.yml`里面的配置来diy自己的博客站点.配置主要包含以下几个内容:  
 
 - 站点信息: 网站浏览器图标、站点页脚、rss订阅、版权信息、github图标
@@ -44,12 +48,11 @@ categories: 博客
 - 标签设置
 - 动画效果设置  
 
-### 首页显示内容    
+### 首页显示内容  
 
 1. 修改博客文章的开头Front-matter中的description字段, 填写相关内容. 如果字段内容非空, 则作为摘要显示在首页.  
 2. 通过在文章中插入`<!--more-->`来标记, 标记之前的内容作为摘要显示在首页.  
-3. 修改主题配置文件`themes\next\_config.yml`   
-
+3. 修改主题配置文件`themes\next\_config.yml`  
 
 ```yml themes\next\_config.yml
 auto_excerpt:
@@ -57,29 +60,28 @@ auto_excerpt:
   length: 150
 ```
 
-
-说明: 第3种方式开启可以作为默认的方式, 第1、2种可以为博客定制, 必要的时候可以设置使得自己的博客展现得更加完美.    
+说明: 第3种方式开启可以作为默认的方式, 第1、2种可以为博客定制, 必要的时候可以设置使得自己的博客展现得更加完美.  
 
 ### 添加社交链接  
 
-修改主题配置文件`themes\next\_config.yml`, 在`social`里面添加自己的账号并设置图标, 并将`social_icons`里的`enable` 设true.     
-
+修改主题配置文件`themes\next\_config.yml`, 在`social`里面添加自己的账号并设置图标, 并将`social_icons`里的`enable` 设true.  
 
 ```yml themes\next\_config.yml
 social:
   GitHub: https://github.com/yourname || github
   E-Mail: mailto:yourname@gmail.com || envelope
-social_icons:   
+social_icons:  
   enable: true  # 显示社交软件图标
 ```
+
 ### 搜索引擎  
+
 本节参考[Hexo 搭建个人博客系列：部署上线篇-Yearito's Blog](http://yearito.cn/posts/hexo-deploy-to-VPS.html).  
-搭建自己的私人博客, 一部分是为了记录方便, 一部分是为了分享, 这就需要将个人网站提交给搜索引擎收录.针对不同搜索引擎需要分别提交网址,但是提交的步骤都大同小异:
-**第一步：提交网站域名**
+搭建自己的私人博客, 一部分是为了记录方便, 一部分是为了分享, 这就需要将个人网站提交给搜索引擎收录.针对不同搜索引擎需要分别提交网址,但是提交的步骤都大同小异:  
+**第一步：提交网站域名**  
 
 注意需要区分输入 http 与 https。
-
-**第二步：验证网站所有权**
+**第二步：验证网站所有权**  
 
 一般都包括以下三种验证方法，其本质都是通过一段字符串验证码来验证用户的网站所有权，三种方法任选其一：
 
@@ -87,9 +89,8 @@ social_icons:
 - HTML元标签验证：在站点首页中添加给定的 `meta` 标签（验证码包含在 `meta` 标签属性中）
 - CNAME验证：添加一个CNAME域名解析记录到指定站点（验证码包含在二级域名中）
 
-Next主题中已经内置集成了各大搜索引擎的HTML元标签验证方案，用户只需获取验证码填写到主题配置文件中并重新打包部署即可完成身份验证。
-
-**第三步：推送或者提交 sitemap**
+Next主题中已经内置集成了各大搜索引擎的HTML元标签验证方案，用户只需获取验证码填写到主题配置文件中并重新打包部署即可完成身份验证。  
+**第三步：推送或者提交 sitemap**  
 
 sitemap，又称站点地图，通常是一个xml格式的文件，最早由谷歌提出，现已被多数引擎所支持。里面包含了站点内的页面列表，帮助搜索引擎理解网站内容的组织架构。
 
@@ -97,9 +98,9 @@ sitemap，又称站点地图，通常是一个xml格式的文件，最早由谷�
 
 在站点根目录下执行以下命令安装相关依赖：
 
-```
-$ npm install hexo-generator-sitemap --save-dev
-$ npm install hexo-generator-baidu-sitemap --save-dev
+```bash
+npm install hexo-generator-sitemap --save-dev
+npm install hexo-generator-baidu-sitemap --save-dev
 ```
 
 之后在执行 `hexo generate` 打包后即可在 public 目录下找到 sitemap.xml 和 baidusitemap.xml 两个文件，将该文件提交到搜索引擎站长后台即可帮助搜索引擎分析收录站点内容，各个搜索引擎收录效率不同，可能需要耐心等上几天。
@@ -153,8 +154,8 @@ baidu_site_verification: UHED80Nn65
 
 Hexo中可以借助 [hexo-baidu-url-submit](https://github.com/huiwang/hexo-baidu-url-submit) 插件快捷实现主动推送，在根目录下安装相关依赖：
 
-```
-$ npm install hexo-baidu-url-submit --save
+```bash
+npm install hexo-baidu-url-submit --save
 ```
 
 在站点配置文件中添加以下代码：
@@ -216,7 +217,6 @@ baidu_push: true
 
 #### 必应
 
-
 在 [必应网站管理员](https://www.bing.com/toolbox/webmaster) 中提交站点域名，此时可以同时输入 sitemap 文件链接，然后同样会进入网站所有权验证页面，在选择二中复制 `meta` 标签的 `content` 属性值到主题配置文件中：
 
 ``` yaml themes\next\_config.yml
@@ -231,9 +231,10 @@ bing_site_verification: 538CCB61234CB4A0B1A71C4581705DCD
 <meta name="msvalidate.01" content="538CCB61234CB4A0B1A71C4581705DCD" />
 ```
 
-回到网站管理员页面点击验证按钮，验证成功后将进入控制台，可以在左侧导航菜单中点击 **仪表板** -> **配置我的网站** -> ** Sitemaps** 查看已提交的站点地图文件的解析抓取情况。
+回到网站管理员页面点击验证按钮，验证成功后将进入控制台，可以在左侧导航菜单中点击 **仪表板** -> **配置我的网站** -> **Sitemaps** 查看已提交的站点地图文件的解析抓取情况。
 
 ### SEO
+
 本节参考[Hexo 搭建个人博客系列：部署上线篇-Yearito's Blog](http://yearito.cn/posts/hexo-deploy-to-VPS.html).
 SEO（Search Engine Optimization）意指搜索引擎优化，可以帮助提高目标网站在搜索引擎中的排名，使得在别人搜索相关内容的时候更容易脱颖而出被人所发现，以提高个人站点的存在价值。
 
@@ -247,14 +248,14 @@ SEO（Search Engine Optimization）意指搜索引擎优化，可以帮助提高
 
   默认的文章url地址为 `http://yoursite.com/:year/:month/:day/:title/`，这种url格式层级太多，并且如果文章标题是中文的话可能会发生转义而出现一堆乱码，不利于搜索引擎的爬取分析，因此建议在站点配置中修改 `permalink` 的格式来简化页面url，并尽量采用英文命名Markdown文件。
 
-## 文章撰写   
+## 文章撰写  
+
 本块内容主要参考`Yearito`的博客[Hexo 搭建个人博客系列：写作技巧篇](http://yearito.cn/posts/hexo-writing-skills.html)  
 
 ### 布局(layout)  
 
 布局可以理解为文档的类别或者格式, 不同的类别对应不同的存储位置, 也有不同的作用.  
-Hexo 默认有三种布局:`post`、`page`、`draft`,用户可以在`scaffolds`目录下新建文档来自定义布局的模板, 修改站点配置文件中的`default_layout`来指定`hexo new`生成文档的默认布局.   
-
+Hexo 默认有三种布局:`post`、`page`、`draft`,用户可以在`scaffolds`目录下新建文档来自定义布局的模板, 修改站点配置文件中的`default_layout`来指定`hexo new`生成文档的默认布局.  
 
 | 布局  | 路径           | 作用                                                      |
 | ----- | -------------- | --------------------------------------------------------- |
@@ -262,13 +263,11 @@ Hexo 默认有三种布局:`post`、`page`、`draft`,用户可以在`scaffolds`�
 | page  | source         | 用于生成类似**首页**、**归档**这样的页面                  |
 | draft | source/_drafts | 草稿文件, 不在网站中显示, 通过`hexo publish`可以转为posts |
 
-
-### 博客添加菜单    
+### 博客添加菜单  
 
 菜单(menu)就是那个主页上显示的导航栏上面的按钮, 默认只有`首页(home)`和`归档(archives)`, 这个可以设置添加更多链接. 首先通过修改主题配置文件中的`menu`字段可以添加新的菜单选项, 其次通过新建`page`布局来生成对应的链接.  
 
-#### 修改主题配置文件添加菜单选项    
-
+#### 修改主题配置文件添加菜单选项  
 
 ``` diff themes\next\_config.yml
 menu:
@@ -279,43 +278,38 @@ menu:
 + categories: /categories/ || th
 ```
 
-
 其中，`||` 之前的值表示菜单链接，之后的值表示所用的 [FontAwesome](https://fontawesome.com) 图标名称.
-完成这一步, 就可以看到主页上面多了对应的菜单选项, 但是点击却跳转到错误界面, **只是开放了页面入口, 没有建立对应链接的页面**. 所以, 下一步就是生成内容界面.     
+完成这一步, 就可以看到主页上面多了对应的菜单选项, 但是点击却跳转到错误界面, **只是开放了页面入口, 没有建立对应链接的页面**. 所以, 下一步就是生成内容界面.  
 
-#### 新建page生成对应网页      
+#### 新建page生成对应网页  
 
-
+```bash
+hexo new page <title>
 ```
-$ hexo new page <title>
-```
-
 
 通过上诉命令会在在 `source` 目录下新建一个 `<title>` 文件夹，并在该文件夹下创建一个 `index.md` 文件，编辑该文件即可修改页面内容.  
-例如，通过 `hexo new page tags` 命令将会生成如下目录.    
+例如，通过 `hexo new page tags` 命令将会生成如下目录.  
 
-
-```
+```bash
 .
-└──  source             
-  ├── _posts          
-  └── tags
-    └── index.md
+└──  source  
+  ├── _posts  
+  └── tags  
+    └── index.md  
 ```
 
 **注意:** 对`index.md`的修改分两种情况:  
 
 - 情况一: 在文档开头(Front Matter) 指定`type`字段  
-  已知`type` 可取 `tages`和`categories`两个值. 这种情况下, 页面会显示便签或者分类的归档, 并且页面不会显示其它内容. 也就是`index.md`正文部分即使写了也不会显示.    
-- 情况二: 不指定`type`的自定义页面    
+  已知`type` 可取 `tages`和`categories`两个值. 这种情况下, 页面会显示便签或者分类的归档, 并且页面不会显示其它内容. 也就是`index.md`正文部分即使写了也不会显示.  
+- 情况二: 不指定`type`的自定义页面  
   这种情况下, `index.md`会和其它文章一样显示.  
 
 ### Hexo 内置标签插件实现复杂功能  
 
 #### 文本居中标签  
 
-一共有三种方式实现文本居中,如下面代码所示:   
-
+一共有三种方式实现文本居中,如下面代码所示:  
 
 ```html 文本居中三种方法
 
@@ -334,7 +328,7 @@ $ hexo new page <title>
 
 通过 note 标签可以为段落添加背景色，语法如下：
 
-```
+```html
 {% note [class] %}
 文本内容 (支持行内标签)
 {% endnote %}
@@ -383,7 +377,7 @@ note:
 
 通过label标签可以为文字添加背景色，语法如下：
 
-```
+```html
 {% label [class]@text  %}
 ```
 
@@ -421,13 +415,13 @@ Bored
 
 通过button标签可以快速添加带有主题样式的按钮，语法如下：
 
-```
+```html
 {% button /path/to/url/, text, icon [class], title %}
 ```
 
 也可简写为：
 
-```
+```html
 {% btn /path/to/url/, text, icon [class], title %}
 ```
 
@@ -435,14 +429,14 @@ Bored
 
 使用示例如下：
 
-```
+```html
 {% btn #, 文本 %}
 {% btn #, 文本 & 标题,, 标题 %}
 {% btn #, 文本 & 图标, home %}
 {% btn #, 文本 & 大图标 (固定宽度), home fa-fw fa-lg %}
 ```
 
-<p>{% btn #, 文本 %}</p>
+<p>{% btn #, 文本 %}</p>  
 <p>{% btn #, 文本 & 标题,, 标题 %}</p>
 <p>{% btn #, 文本 & 图标, home %}</p>
 <p>{% btn #, 文本 & 大图标 (固定宽度), home fa-fw fa-lg %}</p>  
@@ -497,6 +491,7 @@ tab标签用于快速创建tab选项卡，语法如下
 #### 突破容器宽度限制的图片  
 
 有的时候需要突出显示图片, 因为图片的扩大与容器的偏差可以从视觉上提升图片的吸引力.主要有两种方式:  
+
 - HTML方式：使用这种方式时，为 img 添加属性 class="full-image"即可。
 - 标签方式：使用 fullimage 或者 简写 fi， 并传递图片地址、 alt 和 title 属性即可。 属性之间以逗号分隔。
 
@@ -513,12 +508,11 @@ tab标签用于快速创建tab选项卡，语法如下
 
 ```
 
-
 #### 引用站内链接
 
 可以通过如下语法引入站内文章的地址或链接：
 
-```
+```html
 {% post_path slug %}
 {% post_link slug [title] %}
 ```
@@ -529,13 +523,13 @@ tab标签用于快速创建tab选项卡，语法如下
 
 如以下标签将会生成{% post_path 2019-05-27-hexo博客技巧笔记 %}
 
-```
+```html
 {% post_path 2019-05-27-hexo博客技巧笔记 %}
 ```
 
 而以下标签则会生成 {% post_link 2019-05-27-hexo博客技巧笔记 链接标题 %}
 
-```
+```html
 {% post_link 2019-05-27-hexo博客技巧笔记 链接标题 %}
 ```
 
@@ -545,7 +539,7 @@ tab标签用于快速创建tab选项卡，语法如下
 
 如果需要在页面内插入Swig代码，包括原生HTML代码，JavaScript脚本等，可以通过 raw 标签来禁止Markdown引擎渲染标签内的内容。语法如下：
 
-```
+```html
 {% raw %}
 content
 {% endraw %}
@@ -557,7 +551,7 @@ content
 
 如果需要在页面内插入Gist上的代码片段时，可以使用如下标签:
 
-```
+```html
 {% gist gist_id [filename] %}
 ```
 
@@ -616,7 +610,7 @@ url 必须为有效链接地址才会以链接的形式显示在右上角，否�
 
 #### 插入图片
 
-**TODO**  
+#### TODO
 
 - [ ] Hexo-cos-sync 插件开发
 
@@ -630,14 +624,13 @@ url 必须为有效链接地址才会以链接的形式显示在右上角，否�
 
 所有笔记都是来自官方文档和Yearito's Blog, 如果有错误或者想了解更多的内容, 可以参看参考链接。
 
-
-
 ---  
 
 ### 参考链接  
+
 1. [Next document](https://theme-next.org)
 2. [Hexo document](https://hexo.io/zh-cn/docs)
-3. [Hexo 搭建个人博客系列：基础建站篇-Yearito's Blog ](http://yearito.cn/posts/hexo-get-started.html)  
+3. [Hexo 搭建个人博客系列：基础建站篇-Yearito's Blog](http://yearito.cn/posts/hexo-get-started.html)  
 4. [Hexo 搭建个人博客系列：写作技巧篇-Yearito's Blog](http://yearito.cn/posts/hexo-writing-skills.html)  
 5. [Hexo 搭建个人博客系列：部署上线篇-Yearito's Blog](http://yearito.cn/posts/hexo-deploy-to-VPS.html)  
 6. [Hexo Theme Next Test - 标签的运用](https://almostover.ru/2016-01/hexo-theme-next-test/)  
