@@ -132,9 +132,8 @@ npm install --production # 只安装dependencies中的包
 ## 卸载更新
 npm uninstall -g <package> # 删除某个全局包
 npm updatge -g #更新全部全局包
-npm update -g <package> #更新某个包 
+npm update -g <package> #更新某个包  
 ```
-
 
 ---
 

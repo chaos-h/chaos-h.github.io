@@ -29,7 +29,7 @@ tags:
     #security  
     ##  
     encrypt:  
-        enable: true   
+        enable: true
     ```
 
 3. 使用  
