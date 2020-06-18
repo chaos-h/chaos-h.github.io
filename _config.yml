@@ -12,7 +12,7 @@ timezone: Asia/chongqing
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://liweidong95.top
+#url: http://liweidong95.top
 root: /
 permalink: :title.html
 permalink_defaults:
