@@ -6,14 +6,14 @@
 title: the door to chaos
 subtitle: Now, let's chaos
 description: Kill me, or live in the shadow of mine.
-author: h_chaos
+author: seainm
 language: zh-CN #zh-Hans
 timezone: Asia/chongqing
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-#url: http://liweidong95.top
-root: /
+url: http://seainm.top/blog/
+root: /blog/
 permalink: :title.html
 permalink_defaults:
 
@@ -78,8 +78,8 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   - type: git
-    repository: https://github.com/chaos-h/chaos-h.github.io.git
-    branch: master
+    repository: https://github.com/seainm/blog.git
+    branch: gh-pages
   - type: baidu_url_submitter #百度
 
 # hou liang huan
