@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="HWEtsW2D4JYwgHmTJqTGV8oErh65_hoOM2MtMZpUZ1c">
+
+
+
+  <meta name="msvalidate.01" content="E2598045D4604F13530A563B5E634BDC">
+
+
+
+
+
+  <meta name="baidu-site-verification" content="lrwYUw5jId">
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/blog/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Gemini',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: 'E0GH9M9S65',
+      apiKey: 'e2f34a5aa4e2ab4302a54b9b9ba24596',
+      indexName: 'h_chaos',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="程序跑了一天，因为断网，连接中断，之前的运行全白费了！！！     教训两则：  长期任务，最好后台运行，避免出现这种情况   写代码，得鲁棒，懂得日志和周期性保存上下文的重要性    对于第一则，就可以用今日份命令来解决！   让程序后台运行的几种方式后台运行命令&amp;amp;在linux中，要让进程在后台运行，只要在命令后面加上&amp;amp;。 这其实是将命令放到一个作业队列中： test.py123">
+<meta name="keywords" content="linux command,daily skills">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linuxCommandScreen">
+<meta property="og:url" content="http://seainm.top/blog/linuxCommandScreen.html">
+<meta property="og:site_name" content="the door to chaos">
+<meta property="og:description" content="程序跑了一天，因为断网，连接中断，之前的运行全白费了！！！     教训两则：  长期任务，最好后台运行，避免出现这种情况   写代码，得鲁棒，懂得日志和周期性保存上下文的重要性    对于第一则，就可以用今日份命令来解决！   让程序后台运行的几种方式后台运行命令&amp;amp;在linux中，要让进程在后台运行，只要在命令后面加上&amp;amp;。 这其实是将命令放到一个作业队列中： test.py123">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-07-03T16:25:54.739Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linuxCommandScreen">
+<meta name="twitter:description" content="程序跑了一天，因为断网，连接中断，之前的运行全白费了！！！     教训两则：  长期任务，最好后台运行，避免出现这种情况   写代码，得鲁棒，懂得日志和周期性保存上下文的重要性    对于第一则，就可以用今日份命令来解决！   让程序后台运行的几种方式后台运行命令&amp;amp;在linux中，要让进程在后台运行，只要在命令后面加上&amp;amp;。 这其实是将命令放到一个作业队列中： test.py123">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://seainm.top/blog/linuxCommandScreen">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>linuxCommandScreen | the door to chaos</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">the door to chaos</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">Now, let's chaos</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://seainm.top/blog/blog/linuxCommandScreen.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="h_chaos">
+      <meta itemprop="description" content="Kill me, or live in the shadow of mine.">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="the door to chaos">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">linuxCommandScreen
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-06 13:17:17" itemprop="dateCreated datePublished" datetime="2019-08-06T13:17:17+08:00">2019-08-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-07-04 00:25:54" itemprop="dateModified" datetime="2020-07-04T00:25:54+08:00">2020-07-04</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/a-command-a-day/" itemprop="url" rel="index"><span itemprop="name">a command a day</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/blog/linuxCommandScreen.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/blog/linuxCommandScreen.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/blog/linuxCommandScreen.html" class="leancloud_visitors" data-flag-title="linuxCommandScreen">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote class="blockquote-center"><p>程序跑了一天，因为断网，连接中断，之前的运行全白费了！！！  </p>
+</blockquote>
+
+<p>教训两则：</p>
+<ul>
+<li>长期任务，最好后台运行，避免出现这种情况  </li>
+<li>写代码，得鲁棒，懂得日志和周期性保存上下文的重要性  </li>
+</ul>
+<p>对于第一则，就可以用今日份命令来解决！  </p>
+<h2 id="让程序后台运行的几种方式"><a href="#让程序后台运行的几种方式" class="headerlink" title="让程序后台运行的几种方式"></a>让程序后台运行的几种方式</h2><h3 id="后台运行命令-amp"><a href="#后台运行命令-amp" class="headerlink" title="后台运行命令&amp;"></a>后台运行命令&amp;</h3><p>在linux中，要让进程在后台运行，只要在命令后面加上<code>&amp;</code>。
+这其实是将命令放到一个作业队列中：</p>
+<figure class="highlight python"><figcaption><span>test.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time <span class="comment"># time is the only thing I want to import for you</span></span><br><span class="line">day = <span class="number">1</span> <span class="comment"># sadly day can only be one</span></span><br><span class="line">love = <span class="number">520</span> <span class="comment"># they all say 520 means love</span></span><br><span class="line">live = <span class="number">1</span> <span class="comment"># god shall tell me in this life</span></span><br><span class="line"><span class="keyword">while</span> live <span class="keyword">and</span> love != <span class="number">1314</span>: <span class="comment"># here I am and there shall be you beside</span></span><br><span class="line">    time.sleep(day) <span class="comment"># we get old anyway</span></span><br><span class="line">    love += day <span class="comment"># yet the love grows day by day</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><figcaption><span>test.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line">day = <span class="number">1</span></span><br><span class="line">love = <span class="number">520</span></span><br><span class="line">live = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> live <span class="keyword">and</span> love != <span class="number">1314</span>:</span><br><span class="line">    time.sleep(day)</span><br><span class="line">    love += day</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ python test.py &amp;</span><br><span class="line">$ <span class="built_in">jobs</span></span><br><span class="line">[1]+ Running                    python test.py &amp;</span><br></pre></td></tr></table></figure>
+
+<h3 id="已经在前台执行的命令，重新放到后台执行；后台执行的程序，放回前台"><a href="#已经在前台执行的命令，重新放到后台执行；后台执行的程序，放回前台" class="headerlink" title="已经在前台执行的命令，重新放到后台执行；后台执行的程序，放回前台"></a>已经在前台执行的命令，重新放到后台执行；后台执行的程序，放回前台</h3><p><code>ctrl + z</code> 可以暂停运行的进程，使用<code>bg</code>命令将停止的作业放到后台执行，如：<code>bg %1</code>;
+要放回前台：<code>%1</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ python test.py</span><br><span class="line">^Z<span class="comment">#(ctrl + z) # 暂停运行的进程</span></span><br><span class="line">[1+] Stopped                     python test.py</span><br><span class="line">$ <span class="built_in">bg</span> %1  <span class="comment">#放入后台</span></span><br><span class="line">[1]+ python test.py &amp;</span><br><span class="line">$ %1 <span class="comment"># 放回前台</span></span><br><span class="line">python test.py</span><br></pre></td></tr></table></figure>
+
+<h3 id="nohup-和-setsid-和-subshell方式执行"><a href="#nohup-和-setsid-和-subshell方式执行" class="headerlink" title="nohup 和 setsid 和 subshell方式执行"></a>nohup 和 setsid 和 subshell方式执行</h3><p><strong>注意</strong>: 前面的方法虽然可以将进程放到后台执行，但是其父进程还是当前终端shell进程。因此，一旦父进程退出(关闭shell等操作)，会发送<code>hangup</code>信号给所有子进程，子进程收到<code>hangup</code>以后也会推出。<br>如果我们想要退出shell继续运行进程，则需要使用<code>nohup</code>忽略<code>hangup</code>信号，或者<code>setid</code>将父进程设为<code>init</code>进程(进程号1)，也可以通过<code>()</code>打开<code>subshell执行</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ nohup python test.py &amp;</span><br><span class="line">[1] 20172 <span class="comment"># 这是这个进程的进程号</span></span><br><span class="line">$ nohup: ignoring input and appending output to <span class="string">'nohup'</span></span><br><span class="line">$ setsid python test.py &amp; <span class="comment">#setid 执行，关闭shell 仍然运行</span></span><br><span class="line">&lt;关闭当前shell，并重开一个shell&gt;</span><br><span class="line">$ ps -ef| grep test.py <span class="comment">#查找其他用户（shell）的进程</span></span><br><span class="line">seainmli     67039     1  0 23:44 pts/9    00:00:00 python test.py</span><br><span class="line"></span><br><span class="line">&lt;关闭当前shell，并重开一个shell&gt;</span><br><span class="line">$ (python test.py &amp;) <span class="comment"># 在subshell 中后台运行，关闭shell仍然运行</span></span><br><span class="line">$ ps -ef | grep test.py</span><br><span class="line">seainmli     23455     1  0 23:56 pts/9    00:00:00 python test.py</span><br></pre></td></tr></table></figure>
+
+<p>说明：nohup 的用途就是让提交的命令忽略 hangup 信号，标准输出和标准错误缺省会被重定向到 nohup.out 文件中。一般我们可在结尾加上”&amp;”来将命令同时放入后台运行，也可用” &gt; log.out 2&gt;&amp;1”来更改缺省的重定向文件名。</p>
+<h3 id="对于已经在后台运行的程序，让它不受关闭shell影响"><a href="#对于已经在后台运行的程序，让它不受关闭shell影响" class="headerlink" title="对于已经在后台运行的程序，让它不受关闭shell影响"></a>对于已经在后台运行的程序，让它不受关闭shell影响</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">jobs</span></span><br><span class="line">[1]+ Running   python test.py &amp;</span><br><span class="line">$ <span class="built_in">disown</span> %1 <span class="comment"># 此时关闭shell也不会停止</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="screen"><a href="#screen" class="headerlink" title="screen"></a>screen</h2><p>Screen是一款由GNU计划开发的用于命令行终端切换的自由软件。用户可以通过该软件同时连接多个本地或远程的命令行会话，并在其间自由切换，可以看作是窗口管理器的命令行界面版本。它提供了统一的管理多个会话的界面和相应的功能。</p>
+<h3 id="screen-功能"><a href="#screen-功能" class="headerlink" title="screen 功能"></a>screen 功能</h3><ul>
+<li>会话恢复<br>只要Screen本身没有终止，在其内部运行的会话都可以恢复。这一点对于远程登录的用户特别有用——即使网络连接中断，用户也不会失去对已经打开的命令行会话的控制。只要再次登录到主机上执行screen -r就可以恢复会话的运行。同样在暂时离开的时候，也可以执行分离命令detach，在保证里面的程序正常运行的情况下让Screen挂起（切换到后台）。</li>
+<li>多窗口<br>在Screen环境下，所有的会话都独立的运行，并拥有各自的编号、输入、输出和窗口缓存。用户可以通过快捷键在不同的窗口下切换，并可以自由的重定向各个窗口的输入和输出。Screen实现了基本的文本操作，如复制粘贴等；还提供了类似滚动条的功能，可以查看窗口状况的历史记录。窗口还可以被分区和命名，还可以监视后台窗口的活动。</li>
+<li>会话共享<br>creen可以让一个或多个用户从不同终端多次登录一个会话，并共享会话的所有特性（比如可以看到完全相同的输出）。它同时提供了窗口访问权限的机制，可以对窗口进行密码保护。</li>
+</ul>
+<h3 id="screen-语法"><a href="#screen-语法" class="headerlink" title="screen 语法"></a>screen 语法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">screen [-AmRvx -ls -wipe][-d &lt;作业名称&gt;][-h &lt;行数&gt;][-r &lt;作业名称&gt;][-s ][-S &lt;作业名称&gt;]</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：<br>    - -A 　将所有的视窗都调整为目前终端机的大小。<br>    - -d &lt;作业名称&gt; 　将指定的screen作业离线。<br>    - -h &lt;行数&gt; 　指定视窗的缓冲区行数。<br>    - -m 　即使目前已在作业中的screen作业，仍强制建立新的screen作业。<br>    - -r &lt;作业名称&gt; 　恢复离线的screen作业。<br>    - -R 　先试图恢复离线的作业。若找不到离线的作业，即建立新的screen作业。<br>    - -s 　指定建立新视窗时，所要执行的shell。<br>    - -S &lt;作业名称&gt; 　指定screen作业的名称。<br>    - -v 　显示版本信息。<br>    - -x 　恢复之前离线的screen作业。<br>    - -ls或–list 　显示目前所有的screen作业。<br>    - -wipe 　检查目前所有的screen作业，并删除已经无法使用的screen作业。</p>
+<h3 id="常用screen参数"><a href="#常用screen参数" class="headerlink" title="常用screen参数"></a>常用screen参数</h3><p>screen -S yourname -&gt; 新建一个叫yourname的session<br>screen -ls -&gt; 列出当前所有的session<br>screen -r yourname -&gt; 回到yourname这个session<br>screen -d yourname -&gt; 远程detach某个session<br>screen -d -r yourname -&gt; 结束当前session并回到yourname这个sessi</p>
+<p><strong>在每个screen session 下，所有命令都以 ctrl+a(C-a) 开始</strong>。  </p>
+<table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">C-a ?</td>
+<td align="left">显示所有键绑定信息</td>
+</tr>
+<tr>
+<td align="center">C-a c</td>
+<td align="left">创建一个新的运行shell的窗口并切换到该窗口</td>
+</tr>
+<tr>
+<td align="center">C-a n</td>
+<td align="left">Next，切换到下一个 window</td>
+</tr>
+<tr>
+<td align="center">C-a p</td>
+<td align="left">Previous，切换到前一个 window</td>
+</tr>
+<tr>
+<td align="center">C-a 0..9</td>
+<td align="left">切换到第 0..9 个 window</td>
+</tr>
+<tr>
+<td align="center">Ctrl+a [Space]</td>
+<td align="left">由视窗0循序切换到视窗9</td>
+</tr>
+<tr>
+<td align="center">C-a C-a</td>
+<td align="left">在两个最近使用的 window 间切换</td>
+</tr>
+<tr>
+<td align="center">C-a x</td>
+<td align="left">锁住当前的 window，需用用户密码解锁</td>
+</tr>
+<tr>
+<td align="center">C-a d</td>
+<td align="left">detach，暂时离开当前session</td>
+</tr>
+<tr>
+<td align="center">C-a z</td>
+<td align="left">把当前session放到后台执行，用 shell 的 fg 命令则可回去。</td>
+</tr>
+<tr>
+<td align="center">C-a w</td>
+<td align="left">显示所有窗口列表</td>
+</tr>
+<tr>
+<td align="center">C-a t -</td>
+<td align="left">Time，显示当前时间，和系统的 load</td>
+</tr>
+<tr>
+<td align="center">C-a k</td>
+<td align="left">kill window，强行关闭当前的 window</td>
+</tr>
+<tr>
+<td align="center">C-a [</td>
+<td align="left">进入 copy mode，在 copy mode 下可以回滚、搜索、复制就像用使用 vi 一样</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">C-b Backward，PageUp</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">C-f Forward，PageDown</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">H(大写) High，将光标移至左上角</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">L Low，将光标移至左下角</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">0 移到行首</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">$ 行末</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">w forward one word，以字为单位往前移</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">b backward one word，以字为单位往后移</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">Space 第一次按为标记区起点，第二次按为终点</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">Esc 结束 copy mode</td>
+</tr>
+<tr>
+<td align="center">C-a ]</td>
+<td align="left">Paste，把刚刚在 copy mode 选定的内容贴上</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>说明:C-a d 将目前的 screen session (可能含有多个 windows) 丢到后台执行，并会回到还没进 screen 时的状态，此时在 screen session 里，每个 window 内运行的 process (无论是前台/后台)都在继续执行，即使 logout 也不影响。</p>
+<h3 id="使用screen-常用"><a href="#使用screen-常用" class="headerlink" title="使用screen-常用"></a>使用screen-常用</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>一般linux系统都会自带screen，如果没有安装的话，需手动安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install screen <span class="comment"># ubuntu 18.04</span></span><br><span class="line"><span class="comment"># sudo yum install screen # others try this</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="新建"><a href="#新建" class="headerlink" title="新建"></a>新建</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一</span></span><br><span class="line">screen <span class="comment"># 新建一个窗口并进入，窗口无名字，不好区分，不建议</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line">screen -S name <span class="comment"># 新建一个名为name的窗口并进入</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法三</span></span><br><span class="line">screen <span class="built_in">command</span> <span class="comment"># 新建一个窗口并在其中执行command命令，窗口无名字</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="会话分离"><a href="#会话分离" class="headerlink" title="会话分离"></a>会话分离</h4><p>screen的一个有点就是你可以退出当前窗口去做其它事情，让程序在后台运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一</span></span><br><span class="line">C<span class="_">-a</span> + d <span class="comment"># 快捷键，会弹出[detached]的提示，并回到主窗口</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line">screen -d name <span class="comment"># 远程detach某个session，前提是已经跳出了name窗口</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="会话恢复"><a href="#会话恢复" class="headerlink" title="会话恢复"></a>会话恢复</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ screen -ls <span class="comment"># 列出窗口列表</span></span><br><span class="line">There is a screen on:</span><br><span class="line">    42172.test      (Detached)</span><br><span class="line">1 Sockets <span class="keyword">in</span> /var/run/screen/S-seainmli.</span><br><span class="line">$ screen -r <span class="built_in">test</span> <span class="comment"># or screen -r 42172</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="杀死会话窗口"><a href="#杀死会话窗口" class="headerlink" title="杀死会话窗口"></a>杀死会话窗口</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一</span></span><br><span class="line"><span class="built_in">kill</span> -9 threadnum <span class="comment"># 通过杀死线程的方式 比如 kill -9 42172</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line"><span class="built_in">exit</span>   <span class="comment"># 当前窗口退出登陆即可</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法三</span></span><br><span class="line">C<span class="_">-a</span> + k <span class="comment"># 快捷键 ctrl+a+k 杀死当前窗口和窗口中运行的程序</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法四</span></span><br><span class="line">C<span class="_">-a</span></span><br><span class="line">quit <span class="comment"># 这样退出会杀死所有窗口并退出其中运行的所有程序。</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="杀死死去的会话"><a href="#杀死死去的会话" class="headerlink" title="杀死死去的会话"></a>杀死死去的会话</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">screen -wipe <span class="comment"># 自动清处死去的窗口</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p>[1] <a href="https://segmentfault.com/a/1190000002607962" target="_blank" rel="noopener">Linux 进程后台运行的几种方式</a><br>[2] <a href="https://www.cnblogs.com/mchina/archive/2013/01/30/2880680.html" target="_blank" rel="noopener">linux screen 命令详解</a><br>[3] <a href="http://www.gnu.org/software/screen/" target="_blank" rel="noopener">GNU’s Screen 官方站点</a>  </p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/linux-command/" rel="tag"># linux command</a>
+          
+            <a href="/blog/tags/daily-skills/" rel="tag"># daily skills</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/pythonInput.html" rel="next" title="python2 input()、raw_input() 与 python3 的 input()">
+                <i class="fa fa-chevron-left"></i> python2 input()、raw_input() 与 python3 的 input()
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">h_chaos</p>
+              <div class="site-description motion-element" itemprop="description">Kill me, or live in the shadow of mine.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/blog/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/blog/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/blog/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/chaos-h/" title="GitHub &rarr; https://github.com/chaos-h/" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:shanzhonghai@foxmail.com" title="E-Mail &rarr; mailto:shanzhonghai@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#让程序后台运行的几种方式"><span class="nav-text">让程序后台运行的几种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#后台运行命令-amp"><span class="nav-text">后台运行命令&amp;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#已经在前台执行的命令，重新放到后台执行；后台执行的程序，放回前台"><span class="nav-text">已经在前台执行的命令，重新放到后台执行；后台执行的程序，放回前台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nohup-和-setsid-和-subshell方式执行"><span class="nav-text">nohup 和 setsid 和 subshell方式执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对于已经在后台运行的程序，让它不受关闭shell影响"><span class="nav-text">对于已经在后台运行的程序，让它不受关闭shell影响</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#screen"><span class="nav-text">screen</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#screen-功能"><span class="nav-text">screen 功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#screen-语法"><span class="nav-text">screen 语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用screen参数"><span class="nav-text">常用screen参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用screen-常用"><span class="nav-text">使用screen-常用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#新建"><span class="nav-text">新建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#会话分离"><span class="nav-text">会话分离</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#会话恢复"><span class="nav-text">会话恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#杀死会话窗口"><span class="nav-text">杀死会话窗口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#杀死死去的会话"><span class="nav-text">杀死死去的会话</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-text">参考文献</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">h_chaos</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/blog/js/utils.js?v=7.1.1"></script>
+
+  <script src="/blog/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/blog/js/affix.js?v=7.1.1"></script>
+
+  <script src="/blog/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+
+  
+  <script src="/blog/js/scrollspy.js?v=7.1.1"></script>
+<script src="/blog/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/blog/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'A3nqoJN4XRTEkJLDQ2kpqE6d-gzGzoHsz',
+    appKey: 'QWws9gkq8RLuObIDPhVevd52',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

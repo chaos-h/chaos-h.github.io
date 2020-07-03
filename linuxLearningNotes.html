@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="HWEtsW2D4JYwgHmTJqTGV8oErh65_hoOM2MtMZpUZ1c">
+
+
+
+  <meta name="msvalidate.01" content="E2598045D4604F13530A563B5E634BDC">
+
+
+
+
+
+  <meta name="baidu-site-verification" content="lrwYUw5jId">
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/blog/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Gemini',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: 'E0GH9M9S65',
+      apiKey: 'e2f34a5aa4e2ab4302a54b9b9ba24596',
+      indexName: 'h_chaos',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="简单记录一些基本的linux知识。 linux系统启动过程内核引导：当计算机打开电源后，首先是BIOS开机自检，按照BIOS中设置的启动设备（通常是硬盘）来启动。操作系统接管硬件以后，首先读入 /boot 目录下的内核文件。运行init：init进程是系统所有进程的起点，首先是需要读取配置文件 /etc/inittab。init进程的一个主要任务是运行开机启动任务（守护进程daemon）。linu">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linuxLearningNotes">
+<meta property="og:url" content="http://seainm.top/blog/linuxLearningNotes.html">
+<meta property="og:site_name" content="the door to chaos">
+<meta property="og:description" content="简单记录一些基本的linux知识。 linux系统启动过程内核引导：当计算机打开电源后，首先是BIOS开机自检，按照BIOS中设置的启动设备（通常是硬盘）来启动。操作系统接管硬件以后，首先读入 /boot 目录下的内核文件。运行init：init进程是系统所有进程的起点，首先是需要读取配置文件 /etc/inittab。init进程的一个主要任务是运行开机启动任务（守护进程daemon）。linu">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://blog-1259332958.cos.ap-chengdu.myqcloud.com/linuxLearningNotes/linuxStart.png">
+<meta property="og:image" content="https://blog-1259332958.cos.ap-chengdu.myqcloud.com/linuxLearningNotes/linuxDirTree.jpg">
+<meta property="og:image" content="https://blog-1259332958.cos.ap-chengdu.myqcloud.com/linuxLearningNotes/ls-l.png">
+<meta property="og:image" content="https://blog-1259332958.cos.ap-chengdu.myqcloud.com/linuxLearningNotes/fileProperty.png">
+<meta property="og:updated_time" content="2020-07-03T16:25:54.738Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linuxLearningNotes">
+<meta name="twitter:description" content="简单记录一些基本的linux知识。 linux系统启动过程内核引导：当计算机打开电源后，首先是BIOS开机自检，按照BIOS中设置的启动设备（通常是硬盘）来启动。操作系统接管硬件以后，首先读入 /boot 目录下的内核文件。运行init：init进程是系统所有进程的起点，首先是需要读取配置文件 /etc/inittab。init进程的一个主要任务是运行开机启动任务（守护进程daemon）。linu">
+<meta name="twitter:image" content="https://blog-1259332958.cos.ap-chengdu.myqcloud.com/linuxLearningNotes/linuxStart.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://seainm.top/blog/linuxLearningNotes">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>linuxLearningNotes | the door to chaos</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">the door to chaos</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">Now, let's chaos</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://seainm.top/blog/blog/linuxLearningNotes.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="h_chaos">
+      <meta itemprop="description" content="Kill me, or live in the shadow of mine.">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="the door to chaos">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">linuxLearningNotes
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-17 14:00:37" itemprop="dateCreated datePublished" datetime="2019-07-17T14:00:37+08:00">2019-07-17</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-07-04 00:25:54" itemprop="dateModified" datetime="2020-07-04T00:25:54+08:00">2020-07-04</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/blog/linuxLearningNotes.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/blog/linuxLearningNotes.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/blog/linuxLearningNotes.html" class="leancloud_visitors" data-flag-title="linuxLearningNotes">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>简单记录一些基本的linux知识。</p>
+<h2 id="linux系统启动过程"><a href="#linux系统启动过程" class="headerlink" title="linux系统启动过程"></a>linux系统启动过程</h2><p><strong>内核引导</strong>：当计算机打开电源后，首先是BIOS开机自检，按照BIOS中设置的启动设备（通常是硬盘）来启动。操作系统接管硬件以后，首先读入 /boot 目录下的内核文件。<br><strong>运行init</strong>：init进程是系统所有进程的起点，首先是需要读取配置文件 /etc/inittab。init进程的一个主要任务是运行开机启动任务（守护进程daemon）。linux为不同的场合分配不同的启动程序，这通常叫做<code>运行级别</code>(runlevel)。runlevel有7个(0-6),其中0是关机，6是重启，5是图形界面。<br><strong>系统初始化</strong>：在init的配置文件中有这么一行： si::sysinit:/etc/rc.d/rc.sysinit　它调用执行了/etc/rc.d/rc.sysinit，而rc.sysinit是一个bash shell的脚本，它主要是完成一些系统初始化的工作，rc.sysinit是每一个运行级别都要首先运行的重要脚本。它主要完成的工作有：激活交换分区，检查磁盘，加载硬件模块以及其它一些需要优先执行任务。<br><strong>建立终端</strong>：rc执行完毕后，返回init。这时基本系统环境已经设置好了，各种守护进程也已经启动了。init接下来会打开6个终端，以便用户登录系统。默认进入图形界面，可以通过<code>ctrl+alt+F1~F6</code>切换到命令窗口，<code>ctrl+alt+F7</code>回到图形界面。<br><strong>用户登录系统</strong>：根据不同方式：命令行，ssh，图形界面，向login验证程序输入信息，登录系统。  </p>
+<p>  <img src="https://blog-1259332958.cos.ap-chengdu.myqcloud.com/linuxLearningNotes/linuxStart.png" alt="linux系统启动过程" title="图片来自菜鸟教程">  </p>
+<h2 id="linux系统目录结构"><a href="#linux系统目录结构" class="headerlink" title="linux系统目录结构"></a>linux系统目录结构</h2><p>树状目录结构</p>
+<p><img src="https://blog-1259332958.cos.ap-chengdu.myqcloud.com/linuxLearningNotes/linuxDirTree.jpg" alt="linux系统目录结构树" title="图片来自菜鸟教程"></p>
+<ul>
+<li><strong>/bin</strong>:bin是Binary的缩写, 这个目录存放着最经常使用的命令。</li>
+<li><strong>/boot</strong>:这里存放的是启动Linux时使用的一些核心文件，包括一些连接文件以及镜像文件。</li>
+<li><strong>/dev</strong>:dev是Device(设备)的缩写, 该目录下存放的是Linux的外部设备，在Linux中访问设备的方式和访问文件的方式是相同的。</li>
+<li><strong>/etc</strong>:这个目录用来存放所有的系统管理所需要的配置文件和子目录。</li>
+<li><strong>/home</strong>:用户的主目录，在Linux中，每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的。</li>
+<li><strong>/lib</strong>:这个目录里存放着系统最基本的动态连接共享库，其作用类似于Windows里的DLL文件。几乎所有的应用程序都需要用到这些共享库。</li>
+<li><strong>/lost+found</strong>:这个目录一般情况下是空的，当系统非法关机后，这里就存放了一些文件。</li>
+<li><strong>/media</strong>:linux系统会自动识别一些设备，例如U盘、光驱等等，当识别后，linux会把识别的设备挂载到这个目录下。</li>
+<li><strong>/mnt</strong>:系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将光驱挂载在/mnt/上，然后进入该目录就可以查看光驱里的内容了。</li>
+<li><strong>/opt</strong>:这是给主机额外安装软件所摆放的目录。比如你安装一个ORACLE数据库则就可以放到这个目录下。默认是空的。</li>
+<li><strong>/proc</strong>:这个目录是一个虚拟的目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息。这个目录的内容不在硬盘上而是在内存里，我们也可以直接修改里面的某些文件，比如可以通过下面的命令来屏蔽主机的ping命令，使别人无法ping你的机器.<code>echo 1 &gt; /proc/sys/net/ipv4/icmp_echo_ignore_all</code></li>
+<li><strong>/root</strong>:该目录为系统管理员，也称作超级权限者的用户主目录。</li>
+<li><strong>/sbin</strong>:s就是Super User的意思，这里存放的是系统管理员使用的系统管理程序。</li>
+<li><strong>/selinux</strong>:这个目录是Redhat/CentOS所特有的目录，Selinux是一个安全机制，类似于windows的防火墙，但是这套机制比较复杂，这个目录就是存放selinux相关的文件的。</li>
+<li><strong>/srv</strong>:该目录存放一些服务启动之后需要提取的数据。</li>
+<li><strong>/sys</strong>:这是linux2.6内核的一个很大的变化。该目录下安装了2.6内核中新出现的一个文件系统 sysfs 。sysfs文件系统集成了下面3种文件系统的信息：针对进程信息的proc文件系统、针对设备的devfs文件系统以及针对伪终端的devpts文件系统。该文件系统是内核设备树的一个直观反映。当一个内核对象被创建的时候，对应的文件和目录也在内核对象子系统中被创建。</li>
+<li><strong>/tmp</strong>:这个目录是用来存放一些临时文件的。</li>
+<li><strong>/usr</strong>:这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于windows下的program files目录。</li>
+<li><strong>/usr/bin</strong>:系统用户使用的应用程序。</li>
+<li><strong>/usr/sbin</strong>:超级用户使用的比较高级的管理程序和系统守护程序。</li>
+<li><strong>/usr/src</strong>:内核源代码默认的放置目录。</li>
+<li><strong>/var</strong>:这个目录中存放着在不断扩充着的东西，我们习惯将那些经常被修改的目录放在这个目录下。包括各种日志文件。</li>
+<li><strong>/run</strong>:是一个临时文件系统，存储系统启动以来的信息。当系统重启时，这个目录下的文件应该被删掉或清除。如果你的系统上有 /var/run 目录，应该让它指向 run。</li>
+</ul>
+<p>在 Linux 系统中，有几个目录是比较重要的，平时需要注意不要误删除或者随意更改内部文件。<br><strong>/etc：</strong> 上边也提到了，这个是系统中的配置文件，如果你更改了该目录下的某个文件可能会导致系统不能启动。<br><strong>/bin,/sbin,/usr/bin,/usr/sbin:</strong> 这是系统预设的执行文件的放置目录，比如 ls 就是在/bin/ls 目录下的。<br>值得提出的是，/bin, /usr/bin 是给系统用户使用的指令（除root外的通用户），而/sbin, /usr/sbin 则是给root使用的指令。<br><strong>/var：</strong> 这是一个非常重要的目录，系统上跑了很多程序，那么每个程序都会有相应的日志产生，而这些日志就被记录到这个目录下，具体在/var/log 目录下，另外mail的预设放置也是在这里。</p>
+<h2 id="linux文件基本属性"><a href="#linux文件基本属性" class="headerlink" title="linux文件基本属性"></a>linux文件基本属性</h2><h3 id="文件属主与属组"><a href="#文件属主与属组" class="headerlink" title="文件属主与属组"></a>文件属主与属组</h3><p>对于文件来说，它都有一个特定的所有者(user)，也就是对该文件具有所有权的用户。同时，在Linux系统中，用户是按组分类的，一个用户属于一个或多个组。文件所有者以外的用户又可以分为文件所有者的同组用户(group)和其他用户(others)。因此，Linux系统按文件所有者、文件所有者同组用户和其他用户来规定了不同的文件访问权限。</p>
+<h3 id="基本属性"><a href="#基本属性" class="headerlink" title="基本属性"></a>基本属性</h3><p>使用<code>ll</code>或者<code>ls -l</code>命令查看文件或者文件夹的属性  </p>
+<p><img src="https://blog-1259332958.cos.ap-chengdu.myqcloud.com/linuxLearningNotes/ls-l.png" alt="文件基本属性查看" title="文件基本属性查看">  </p>
+<p>其中，第一部分就是文件的基本属性，由10个字符组成：</p>
+<p><img src="https://blog-1259332958.cos.ap-chengdu.myqcloud.com/linuxLearningNotes/fileProperty.png" alt="文件基本属性" title="文件基本属性">  </p>
+<p>第一个字符，代表的文件类型：</p>
+<ul>
+<li><code>d</code>：目录</li>
+<li><code>-</code>：文件</li>
+<li><code>l</code>：链接文档(link file)</li>
+<li><code>b</code>：装置文件里面的可供储存的接口设备(可随机存取装置)</li>
+<li><code>c</code>：装置文件里面的串行端口设备，例如键盘、鼠标(一次性读取装置)</li>
+</ul>
+<p>后面分别是不同用户的权限，权限包括三种：[ r ]代表可读(read)、[ w ]代表可写(write)、[ x ]代表可执行(execute)。 要注意的是，这三个权限的位置不会改变，如果没有权限，就会出现减号[ - ]而已。</p>
+<h3 id="更改文件属性"><a href="#更改文件属性" class="headerlink" title="更改文件属性"></a>更改文件属性</h3><ol>
+<li><p><strong>chgrp</strong>:更改文件属组<br>语法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chgrp [-R] 属组名 文件名</span><br></pre></td></tr></table></figure>
+
+<p>参数选项：</p>
+<ul>
+<li>-R：递归更改文件属组，就是在更改某个目录文件的属组时，如果加上-R的参数，那么该目录下的所有文件的属组都会更改。</li>
+</ul>
+</li>
+<li><p><strong>chown</strong>:更改文件属主，也可以同时更改文件属组<br>语法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown [–R] 属主名 文件名</span><br><span class="line">chown [-R] 属主名：属组名 文件名</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>参数选项：无</p>
+<ol start="3">
+<li><p><strong>chmod</strong>:更改文件9个属性  </p>
+<p>两种设置方式，一种是将rwx与数字对应，通过设置数字来设定对应权限；一种是通过对特定用户对应的符号来单独设定权限。<br><strong>数字语法</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod [-R] xyz 文件或目录</span><br></pre></td></tr></table></figure>
+
+<p>参数选项：</p>
+<ul>
+<li>xyz：三个用户组对应的数字权限</li>
+<li>-R：进行递归(recursive)的持续变更，亦即连同次目录下的所有文件都会变更<br>各权限数字对应表如下：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>数字</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>r</td>
+<td>4</td>
+</tr>
+<tr>
+<td>w</td>
+<td>2</td>
+</tr>
+<tr>
+<td>x</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p><strong>示例</strong><br>当我们要将文件<code>file</code>权限设置为 [-rwxrwx—] 时，因为</p>
+<ul>
+<li>owner = rwx = 4+2+1 = 7</li>
+<li>group = rwx = 4+2+1 = 7</li>
+<li>others= — = 0+0+0 = 0</li>
+</ul>
+<p>所以我们使用命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 770 files目录</span><br></pre></td></tr></table></figure>
+
+<p><strong>符号类型改变文件权限语法</strong><br>主要对照下表</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>用户类型</td>
+<td>u（user）</td>
+<td>g（group）</td>
+<td>o（others）</td>
+<td>a（all）</td>
+</tr>
+<tr>
+<td>操作方法</td>
+<td>+（加入）</td>
+<td>-（出去）</td>
+<td>=（设定）</td>
+<td></td>
+</tr>
+<tr>
+<td>可操作对象</td>
+<td>r</td>
+<td>w</td>
+<td>x</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod u=rwx,g=rw,o=r file <span class="comment">#对文件file的不同用户分别修改权限</span></span><br><span class="line">chmod g+x file <span class="comment">#组内用户增加执行权限</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="linux文件与目录管理"><a href="#linux文件与目录管理" class="headerlink" title="linux文件与目录管理"></a>linux文件与目录管理</h2><p>这个基本上每天都能用到，太基础了。<br>首先是了解几个符号：</p>
+<ul>
+<li><code>.</code>:当前目录</li>
+<li><code>..</code>：父目录</li>
+<li><code>~</code>：用户目录，一般是/home/username/</li>
+</ul>
+<p>借助上面的符号可以使用<strong>相对路径</strong>，否则，称之为<strong>绝对路径</strong>，如<code>/home/username/</code>.</p>
+<h3 id="处理目录的常用命令"><a href="#处理目录的常用命令" class="headerlink" title="处理目录的常用命令"></a>处理目录的常用命令</h3><h4 id="ls（列出目录）"><a href="#ls（列出目录）" class="headerlink" title="ls（列出目录）"></a>ls（列出目录）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls [可选参数] [目录或者文件]</span><br></pre></td></tr></table></figure>
+
+<p>常用三个参数：</p>
+<ul>
+<li>-a ：全部的文件，连同隐藏档( 开头为 . 的文件) 一起列出来；</li>
+<li>-d ：仅列出目录本身，而不是列出目录内的文件数据；</li>
+<li>-l ：长数据串列出，包含文件的属性与权限等等数据；</li>
+</ul>
+<h4 id="cd-切换目录"><a href="#cd-切换目录" class="headerlink" title="cd (切换目录)"></a>cd (切换目录)</h4><p>cd是Change Directory的缩写，这是用来变换工作目录的命令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> [相对路径或绝对路径]</span><br></pre></td></tr></table></figure>
+
+<h4 id="pwd-显示目前所在的目录"><a href="#pwd-显示目前所在的目录" class="headerlink" title="pwd (显示目前所在的目录)"></a>pwd (显示目前所在的目录)</h4><p>pwd 是 Print Working Directory 的缩写，也就是显示目前所在目录的命令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pwd</span> [-P]</span><br></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li>-P ：显示出确实的路径，而非使用连结 (link) 路径。(有的时候目录是连接目录)</li>
+</ul>
+<p>####　mkdir (创建新目录)<br>mkdir (make directory)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir [-mp] 目录名称</span><br></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li>-p ：帮助你直接将所需要的目录(包含上一级目录)递归创建起来！</li>
+<li>-m ：配置文件的权限喔！直接配置，而不是看默认权限 (umask)</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p test1/test2/test3/test4</span><br><span class="line">mkdir -m 711 test5</span><br></pre></td></tr></table></figure>
+
+<h4 id="rmdir-删除空的目录"><a href="#rmdir-删除空的目录" class="headerlink" title="rmdir (删除空的目录)"></a>rmdir (删除空的目录)</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rmdir [-p] 目录名称</span><br></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li>-p ：连同上一级『空的』目录也一起删除</li>
+</ul>
+<h4 id="cp-复制文件或目录"><a href="#cp-复制文件或目录" class="headerlink" title="cp (复制文件或目录)"></a>cp (复制文件或目录)</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp [-adfilprsu] 来源档(<span class="built_in">source</span>) 目标档(destination)</span><br><span class="line">cp [options] source1 source2 source3 .... directory</span><br></pre></td></tr></table></figure>
+
+<p>常用参数：</p>
+<ul>
+<li>-a：相当於 -pdr 的意思，至於 pdr 请参考下列说明；(常用)</li>
+<li>-d：若来源档为连结档的属性(link file)，则复制连结档属性而非文件本身；</li>
+<li>-f：为强制(force)的意思，若目标文件已经存在且无法开启，则移除后再尝试一次；</li>
+<li>-i：若目标档(destination)已经存在时，在覆盖时会先询问动作的进行(常用)</li>
+<li>-l：进行硬式连结(hard link)的连结档创建，而非复制文件本身；</li>
+<li>-p：连同文件的属性一起复制过去，而非使用默认属性(备份常用)；</li>
+<li>-r：递归持续复制，用於目录的复制行为；(常用)</li>
+<li>-s：复制成为符号连结档 (symbolic link)，亦即『捷径』文件；</li>
+<li>-u：若 destination 比 source 旧才升级 destination ！</li>
+</ul>
+<h4 id="rm-移除文件或目录"><a href="#rm-移除文件或目录" class="headerlink" title="rm (移除文件或目录)"></a>rm (移除文件或目录)</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm [-fir] 文件或目录</span><br></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li>-f ：就是 force 的意思，忽略不存在的文件，不会出现警告信息；</li>
+<li>-i ：互动模式，在删除前会询问使用者是否动作</li>
+<li>-r ：递归删除啊！最常用在目录的删除了！这是非常危险的选项！！！</li>
+</ul>
+<h4 id="mv-移动文件与目录，或修改名称"><a href="#mv-移动文件与目录，或修改名称" class="headerlink" title="mv (移动文件与目录，或修改名称)"></a>mv (移动文件与目录，或修改名称)</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mv [-fiu] <span class="built_in">source</span> destination</span><br><span class="line">mv [options] source1 source2 source3 .... directory</span><br></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li>-f ：force 强制的意思，如果目标文件已经存在，不会询问而直接覆盖；</li>
+<li>-i ：若目标文件 (destination) 已经存在时，就会询问是否覆盖！</li>
+<li>-u ：若目标文件已经存在，且 source 比较新，才会升级 (update)  </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv filename0 filename1 <span class="comment">#重命名</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="查看内容常用命令"><a href="#查看内容常用命令" class="headerlink" title="查看内容常用命令"></a>查看内容常用命令</h3><p>Linux系统中使用以下命令来查看文件的内容：</p>
+<ul>
+<li>cat  由第一行开始显示文件内容</li>
+<li>tac  从最后一行开始显示，可以看出 tac 是 cat 的倒著写！</li>
+<li>nl   显示的时候，顺道输出行号！</li>
+<li>more 一页一页的显示文件内容</li>
+<li>less 与 more 类似，但是比 more 更好的是，他可以往前翻页！</li>
+<li>head 只看头几行</li>
+<li>tail 只看尾巴几行</li>
+</ul>
+<h2 id="linux用户与用户组管理"><a href="#linux用户与用户组管理" class="headerlink" title="linux用户与用户组管理"></a>linux用户与用户组管理</h2><p>实现用户账户的管理，要完成的工作主要有如下几个方面：</p>
+<ul>
+<li>用户账号的添加、删除与修改。</li>
+<li>用户口令的管理。</li>
+<li>用户组的管理。</li>
+</ul>
+<h3 id="Linux系统用户账号的管理"><a href="#Linux系统用户账号的管理" class="headerlink" title="Linux系统用户账号的管理"></a>Linux系统用户账号的管理</h3><h4 id="添加新的用户账号"><a href="#添加新的用户账号" class="headerlink" title="添加新的用户账号"></a>添加新的用户账号</h4><p>增加用户账号就是在/etc/passwd文件中为新用户增加一条记录，同时更新其他系统文件如/etc/shadow, /etc/group等。<br>Linux提供了集成的系统管理工具userconf，它可以用来对用户账号进行统一管理。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd 选项 用户名</span><br></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li>-c comment 指定一段注释性描述。</li>
+<li>-d 目录 指定用户主目录，如果此目录不存在，则同时使用-m选项，可以创建主目录</li>
+<li>-g 用户组 指定用户所属的用户组。</li>
+<li>-G 用户组，用户组 指定用户所属的附加组。</li>
+<li>-s Shell文件 指定用户的登录Shell。</li>
+<li>-u 用户号 指定用户的用户号，如果同时有-o选项，则可以重复使用其他用户的标识号。</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">useradd –d /usr/sam -m sam</span><br><span class="line"><span class="comment"># 此命令创建了一个用户sam，其中-d和-m选项用来为登录名sam产生一个主目录/usr/sam（/usr为默认的用户主目录所在的父目录）。</span></span><br><span class="line">useradd -s /bin/sh -g group –G adm,root gem</span><br><span class="line"><span class="comment"># 此命令新建了一个用户gem，该用户的登录Shell是 /bin/sh，它属于group用户组，同时又属于adm和root用户组，其中group用户组是其主组。</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="删除帐号"><a href="#删除帐号" class="headerlink" title="删除帐号"></a>删除帐号</h4><p>如果一个用户的账号不再使用，可以从系统中删除。删除用户账号就是要将/etc/passwd等系统文件中的该用户记录删除，必要时还删除用户的主目录。<br>删除一个已有的用户账号使用userdel命令，其格式如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">userdel 选项 用户名 <span class="comment">#常用的选项是 -r，它的作用是把用户的主目录一起删除。</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="修改帐号"><a href="#修改帐号" class="headerlink" title="修改帐号"></a>修改帐号</h4><p>改用户账号就是根据实际情况更改用户的有关属性，如用户号、主目录、用户组、登录Shell等。<br>修改已有用户的信息使用usermod命令，其格式如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod 选项 用户名</span><br></pre></td></tr></table></figure>
+
+<p>常用的选项包括-c, -d, -m, -g, -G, -s, -u以及-o等，这些选项的意义与useradd命令中的选项一样，可以为用户指定新的资源值。<br>另外，有些系统可以使用选项：-l 新用户名.<br>这个选项指定一个新的账号，即将原来的用户名改为新的用户名。<br>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">usermod -s /bin/ksh -d /home/z –g developer sam</span><br><span class="line"><span class="comment"># 此命令将用户sam的登录Shell修改为ksh，主目录改为/home/z，用户组改为developer。</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="用户口令的管理"><a href="#用户口令的管理" class="headerlink" title="用户口令的管理"></a>用户口令的管理</h4><p>用户管理的一项重要内容是用户口令的管理。用户账号刚创建时没有口令，但是被系统锁定，无法使用，必须为其指定口令后才可以使用，即使是指定空口令。<br>指定和修改用户口令的Shell命令是passwd。超级用户可以为自己和其他用户指定口令，普通用户只能用它修改自己的口令。命令的格式为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">asswd 选项 用户名</span><br></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li>-l 锁定口令，即禁用账号。</li>
+<li>-u 口令解锁。</li>
+<li>-d 使账号无口令。</li>
+<li>-f 强迫用户下次登录时修改口令。</li>
+</ul>
+<h3 id="用户组的管理"><a href="#用户组的管理" class="headerlink" title="用户组的管理"></a>用户组的管理</h3><h4 id="增加用户组"><a href="#增加用户组" class="headerlink" title="增加用户组"></a>增加用户组</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupadd 选项 用户组</span><br></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li>-g GID 指定新用户组的组标识号（GID）。</li>
+<li>-o 一般与-g选项同时使用，表示新用户组的GID可以与系统已有用户组的GID相同。</li>
+</ul>
+<h4 id="删除用户组"><a href="#删除用户组" class="headerlink" title="删除用户组"></a>删除用户组</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupdel 用户组</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改用户组属性"><a href="#修改用户组属性" class="headerlink" title="修改用户组属性"></a>修改用户组属性</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupmod 选项 用户组</span><br></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li>-g GID 指定新用户组的组标识号（GID）。</li>
+<li>-o 一般与-g选项同时使用，表示新用户组的GID可以与系统已有用户组的GID相同。</li>
+<li>-n新用户组 将用户组的名字改为新名字</li>
+</ul>
+<h4 id="切换用户组"><a href="#切换用户组" class="headerlink" title="切换用户组"></a>切换用户组</h4><p>如果一个用户同时属于多个用户组，那么用户可以在用户组之间切换，以便具有其他用户组的权限。用户可以在登录后，使用命令newgrp切换到其他用户组，这个命令的参数就是目的用户组。如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">newgrp root <span class="comment">#将当前用户切换到root用户组</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="几个系统文件"><a href="#几个系统文件" class="headerlink" title="几个系统文件"></a>几个系统文件</h3><p>完成用户管理的工作有许多种方法，但是每一种方法实际上都是对有关的系统文件进行修改。<br>与用户和用户组相关的信息都存放在一些系统文件中，这些文件包括/etc/passwd, /etc/shadow, /etc/group等。</p>
+<ul>
+<li><strong>/etc/passwd</strong>:Linux系统中的每个用户都在/etc/passwd文件中有一个对应的记录行，它记录了这个用户的一些基本属性。包括<code>用户名，口令，用户标识号，组标识号，注释性描述，主目录，登录Shell</code>等。</li>
+<li><strong>etc/shadow</strong>:由于/etc/passwd文件是所有用户都可读的，如果用户的密码太简单或规律比较明显的话，一台普通的计算机就能够很容易地将它破解，因此对安全性要求较高的Linux系统都把加密后的口令字分离出来，单独存放在一个文件中，这个文件是/etc/shadow文件。 有超级用户才拥有该文件读权限，这就保证了用户密码的安全性。主要包括<code>登录名:加密口令:最后一次修改时间:最小时间间隔:最大时间间隔:警告时间:不活动时间:失效时间:标志</code></li>
+<li><strong>/etc/group</strong>:用户组的所有信息都存放在/etc/group文件中,主要包括<code>组名:口令:组标识号:组内用户列表</code>.当一个用户同时是多个组中的成员时，在/etc/passwd文件中记录的是用户所属的主组，也就是登录时所属的默认组，而其他组称为附加组。用户要访问属于附加组的文件时，必须首先使用newgrp命令使自己成为所要访问的组中的成员。</li>
+</ul>
+<h3 id="批量添加账户"><a href="#批量添加账户" class="headerlink" title="批量添加账户"></a>批量添加账户</h3><p>有的时候需要批量添加用户，肯能是好几十个，这肯定不能一个个添加，可以考虑<a href="https://www.runoob.com/linux/linux-user-manage.html" target="_blank" rel="noopener">批量添加</a>。</p>
+<h2 id="linux磁盘管理"><a href="#linux磁盘管理" class="headerlink" title="linux磁盘管理"></a>linux磁盘管理</h2><p>Linux磁盘管理常用三个命令为df、du和fdisk。</p>
+<ul>
+<li>df：列出文件系统的整体磁盘使用量</li>
+<li>du：检查磁盘空间使用量</li>
+<li>fdisk：用于磁盘分区</li>
+</ul>
+<h3 id="df-检查文件系统的磁盘空间占用情况"><a href="#df-检查文件系统的磁盘空间占用情况" class="headerlink" title="df 检查文件系统的磁盘空间占用情况"></a>df 检查文件系统的磁盘空间占用情况</h3><p>df 命令用来检查文件系统的磁盘空间占用情况。可以利用该命令来获取硬盘被占用了多少空间，目前还剩下多少空间等信息。<br>语法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f [-ahikHTm] [目录或文件名]</span><br></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li>-a ：列出所有的文件系统，包括系统特有的 /proc 等文件系统；</li>
+<li>-k ：以 KBytes 的容量显示各文件系统；</li>
+<li>-m ：以 MBytes 的容量显示各文件系统；</li>
+<li>-h ：以人们较易阅读的 GBytes, MBytes, KBytes 等格式自行显示；</li>
+<li>-H ：以 M=1000K 取代 M=1024K 的进位方式；</li>
+<li>-T ：显示文件系统类型, 连同该 partition 的 filesystem 名称 (例如 ext3) 也列出；</li>
+<li>-i ：不用硬盘容量，而以 inode 的数量来显示</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">df     <span class="comment"># 将系统所有文件提醒列出来</span></span><br><span class="line">df -h  <span class="comment"># 将结果用易读的方式显示出来</span></span><br><span class="line">df -aT <span class="comment"># 将系统内的所有特殊文件格式及名称都列出来</span></span><br><span class="line">df -h /etc <span class="comment"># 将 /etc 底下的可用的磁盘容量以易读的容量格式显示</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="du-查看文件和目录所占用的磁盘空间"><a href="#du-查看文件和目录所占用的磁盘空间" class="headerlink" title="du 查看文件和目录所占用的磁盘空间"></a>du 查看文件和目录所占用的磁盘空间</h3><p>Linux du命令也是查看使用空间的，但是与df命令不同的是Linux du命令是对文件和目录磁盘使用的空间的查看<br>语法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du [-ahskm] 文件或目录名称</span><br></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li>-a ：列出所有的文件与目录容量，因为默认仅统计目录底下的文件量而已。</li>
+<li>-h ：以人们较易读的容量格式 (G/M) 显示；</li>
+<li>-s ：列出总量而已，而不列出每个各别的目录占用容量；</li>
+<li>-S ：不包括子目录下的总计，与 -s 有点差别。</li>
+<li>-k ：以 KBytes 列出容量显示；</li>
+<li>-m ：以 MBytes 列出容量显示；</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">du <span class="comment">#列出所有目录的空间占用情况</span></span><br><span class="line">du -a <span class="comment">#列出文件和目录的空间占用情况</span></span><br><span class="line">du -sm /* <span class="comment">#检查根目录底下每个目录所占用的容量</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="fdisk-磁盘分区操作"><a href="#fdisk-磁盘分区操作" class="headerlink" title="fdisk 磁盘分区操作"></a>fdisk 磁盘分区操作</h3><p>fdisk 是 Linux 的磁盘分区表操作工具。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdisk [-l] 装置名称</span><br></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li>-l ：输出后面接的装置所有的分区内容。若仅有 fdisk -l 时， 则系统将会把整个系统内能够搜寻到的装置的分区均列出来。</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出所有分区信息</span></span><br><span class="line">fdisk -l</span><br><span class="line"><span class="comment"># 找出你系统中的根目录所在磁盘，并查阅该硬盘内的相关信息</span></span><br><span class="line">df / <span class="comment"># 找到自己磁盘目录</span></span><br><span class="line">fdisk  [磁盘目录]</span><br></pre></td></tr></table></figure>
+
+<h3 id="mkfs-磁盘格式化"><a href="#mkfs-磁盘格式化" class="headerlink" title="mkfs 磁盘格式化"></a>mkfs 磁盘格式化</h3><p>mkfs 即 make filesystem</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs [-t 文件系统格式] 装置文件名</span><br></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li>-t ：可以接文件系统格式，例如 ext3, ext2, vfat 等(系统有支持才会生效)</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs -t ext3 /dev/hdc6 <span class="comment"># 将分区 /dev/hdc6（可指定你自己的分区） 格式化为 ext3 文件系统</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="fsck-磁盘检验"><a href="#fsck-磁盘检验" class="headerlink" title="fsck  磁盘检验"></a>fsck  磁盘检验</h3><p>fsck（file system check）用来检查和维护不一致的文件系统。<br>若系统掉电或磁盘发生问题，可利用fsck命令对文件系统进行检查。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fsck [-t 文件系统] [-ACay] 装置名称</span><br></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li>-t : 给定档案系统的型式，若在 /etc/fstab 中已有定义或 kernel 本身已支援的则不需加上此参数</li>
+<li>-s : 依序一个一个地执行 fsck 的指令来检查</li>
+<li>-A : 对/etc/fstab 中所有列出来的 分区（partition）做检查</li>
+<li>-C : 显示完整的检查进度</li>
+<li>-d : 打印出 e2fsck 的 debug 结果</li>
+<li>-p : 同时有 -A 条件时，同时有多个 fsck 的检查一起执行</li>
+<li>-R : 同时有 -A 条件时，省略 / 不检查</li>
+<li>-V : 详细显示模式</li>
+<li>-a : 如果检查有错则自动修复</li>
+<li>-r : 如果检查有错则由使用者回答是否修复</li>
+<li>-y : 选项指定检测每个文件是自动输入yes，在不确定那些是不正常的时候，可以执行 # fsck -y 全部检查修复。</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fsck -C -f -t ext3 /dev/hdc6  <span class="comment">#强制检测 /dev/hdc6 分区:</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="磁盘挂载与卸除"><a href="#磁盘挂载与卸除" class="headerlink" title="磁盘挂载与卸除"></a>磁盘挂载与卸除</h4><p>Linux 的磁盘挂载使用 mount 命令，卸载使用 umount 命令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mount [-t 文件系统] [-L Label名] [-o 额外选项] [-n]  装置文件名  挂载点</span><br><span class="line">umount [-fn] 装置文件名或挂载点</span><br></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li>-f ：强制卸除！可用在类似网络文件系统 (NFS) 无法读取到的情况下；</li>
+<li>-n ：不升级 /etc/mtab 情况下卸除。</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用默认的方式，将刚刚创建的 /dev/hdc6 挂载到 /mnt/hdc6 上面！</span></span><br><span class="line">mkdir /mnt/hdc6</span><br><span class="line">mount /dev/hdc6 /mnt/hdc6</span><br><span class="line">[root@www ~]<span class="comment"># umount /dev/hdc6 #卸载/dev/hdc6</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><a href="https://www.runoob.com/linux/linux-tutorial.html" target="_blank" rel="noopener">linux教程-菜鸟教程</a></li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/shellLearningNotes.html" rel="next" title="shell Learning Notes">
+                <i class="fa fa-chevron-left"></i> shell Learning Notes
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/hexoRendorError.html" rel="prev" title="记一次Hexo FATAL unknown block tag 问题解决">
+                记一次Hexo FATAL unknown block tag 问题解决 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">h_chaos</p>
+              <div class="site-description motion-element" itemprop="description">Kill me, or live in the shadow of mine.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/blog/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/blog/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/blog/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/chaos-h/" title="GitHub &rarr; https://github.com/chaos-h/" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:shanzhonghai@foxmail.com" title="E-Mail &rarr; mailto:shanzhonghai@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#linux系统启动过程"><span class="nav-text">linux系统启动过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux系统目录结构"><span class="nav-text">linux系统目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux文件基本属性"><span class="nav-text">linux文件基本属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件属主与属组"><span class="nav-text">文件属主与属组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本属性"><span class="nav-text">基本属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更改文件属性"><span class="nav-text">更改文件属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux文件与目录管理"><span class="nav-text">linux文件与目录管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#处理目录的常用命令"><span class="nav-text">处理目录的常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ls（列出目录）"><span class="nav-text">ls（列出目录）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cd-切换目录"><span class="nav-text">cd (切换目录)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pwd-显示目前所在的目录"><span class="nav-text">pwd (显示目前所在的目录)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rmdir-删除空的目录"><span class="nav-text">rmdir (删除空的目录)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cp-复制文件或目录"><span class="nav-text">cp (复制文件或目录)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rm-移除文件或目录"><span class="nav-text">rm (移除文件或目录)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mv-移动文件与目录，或修改名称"><span class="nav-text">mv (移动文件与目录，或修改名称)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看内容常用命令"><span class="nav-text">查看内容常用命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux用户与用户组管理"><span class="nav-text">linux用户与用户组管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux系统用户账号的管理"><span class="nav-text">Linux系统用户账号的管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加新的用户账号"><span class="nav-text">添加新的用户账号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除帐号"><span class="nav-text">删除帐号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改帐号"><span class="nav-text">修改帐号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户口令的管理"><span class="nav-text">用户口令的管理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户组的管理"><span class="nav-text">用户组的管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#增加用户组"><span class="nav-text">增加用户组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除用户组"><span class="nav-text">删除用户组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改用户组属性"><span class="nav-text">修改用户组属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#切换用户组"><span class="nav-text">切换用户组</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个系统文件"><span class="nav-text">几个系统文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#批量添加账户"><span class="nav-text">批量添加账户</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux磁盘管理"><span class="nav-text">linux磁盘管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#df-检查文件系统的磁盘空间占用情况"><span class="nav-text">df 检查文件系统的磁盘空间占用情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#du-查看文件和目录所占用的磁盘空间"><span class="nav-text">du 查看文件和目录所占用的磁盘空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fdisk-磁盘分区操作"><span class="nav-text">fdisk 磁盘分区操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mkfs-磁盘格式化"><span class="nav-text">mkfs 磁盘格式化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fsck-磁盘检验"><span class="nav-text">fsck  磁盘检验</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#磁盘挂载与卸除"><span class="nav-text">磁盘挂载与卸除</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">h_chaos</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/blog/js/utils.js?v=7.1.1"></script>
+
+  <script src="/blog/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/blog/js/affix.js?v=7.1.1"></script>
+
+  <script src="/blog/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+
+  
+  <script src="/blog/js/scrollspy.js?v=7.1.1"></script>
+<script src="/blog/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/blog/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'A3nqoJN4XRTEkJLDQ2kpqE6d-gzGzoHsz',
+    appKey: 'QWws9gkq8RLuObIDPhVevd52',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

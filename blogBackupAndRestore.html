@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="HWEtsW2D4JYwgHmTJqTGV8oErh65_hoOM2MtMZpUZ1c">
+
+
+
+  <meta name="msvalidate.01" content="E2598045D4604F13530A563B5E634BDC">
+
+
+
+
+
+  <meta name="baidu-site-verification" content="lrwYUw5jId">
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/blog/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Gemini',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: 'E0GH9M9S65',
+      apiKey: 'e2f34a5aa4e2ab4302a54b9b9ba24596',
+      indexName: 'h_chaos',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="如果你搭建了自己的博客, 那就不得不考虑备份与恢复的事情。因为如果你换电脑或者重装系统，一旦原来的博客书写环境换了，重新搭建将是很麻烦的一件事。那些你为自己个性化选择的配置，各个平台上的服务集成，且不说你还记不记得怎么操作，就算按着教程，也得花费大把的时间。还好，我们有Github！接下来，我将介绍下如何结合Github来备份和恢复你的博客。   说明这里的前提是你已经搭建好了自己的博客，所以默认">
+<meta name="keywords" content="备份恢复">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo 博客备份与恢复">
+<meta property="og:url" content="http://seainm.top/blog/blogBackupAndRestore.html">
+<meta property="og:site_name" content="the door to chaos">
+<meta property="og:description" content="如果你搭建了自己的博客, 那就不得不考虑备份与恢复的事情。因为如果你换电脑或者重装系统，一旦原来的博客书写环境换了，重新搭建将是很麻烦的一件事。那些你为自己个性化选择的配置，各个平台上的服务集成，且不说你还记不记得怎么操作，就算按着教程，也得花费大把的时间。还好，我们有Github！接下来，我将介绍下如何结合Github来备份和恢复你的博客。   说明这里的前提是你已经搭建好了自己的博客，所以默认">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-07-03T16:25:54.737Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo 博客备份与恢复">
+<meta name="twitter:description" content="如果你搭建了自己的博客, 那就不得不考虑备份与恢复的事情。因为如果你换电脑或者重装系统，一旦原来的博客书写环境换了，重新搭建将是很麻烦的一件事。那些你为自己个性化选择的配置，各个平台上的服务集成，且不说你还记不记得怎么操作，就算按着教程，也得花费大把的时间。还好，我们有Github！接下来，我将介绍下如何结合Github来备份和恢复你的博客。   说明这里的前提是你已经搭建好了自己的博客，所以默认">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://seainm.top/blog/blogBackupAndRestore">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Hexo 博客备份与恢复 | the door to chaos</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">the door to chaos</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">Now, let's chaos</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://seainm.top/blog/blog/blogBackupAndRestore.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="h_chaos">
+      <meta itemprop="description" content="Kill me, or live in the shadow of mine.">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="the door to chaos">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Hexo 博客备份与恢复
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-29 10:43:35" itemprop="dateCreated datePublished" datetime="2019-05-29T10:43:35+08:00">2019-05-29</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-07-04 00:25:54" itemprop="dateModified" datetime="2020-07-04T00:25:54+08:00">2020-07-04</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/博客/" itemprop="url" rel="index"><span itemprop="name">博客</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/blog/blogBackupAndRestore.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/blog/blogBackupAndRestore.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/blog/blogBackupAndRestore.html" class="leancloud_visitors" data-flag-title="Hexo 博客备份与恢复">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>如果你搭建了自己的博客, 那就不得不考虑备份与恢复的事情。因为如果你换电脑或者重装系统，一旦原来的博客书写环境换了，重新搭建将是很麻烦的一件事。那些你为自己个性化选择的配置，各个平台上的服务集成，且不说你还记不记得怎么操作，就算按着教程，也得花费大把的时间。还好，我们有Github！接下来，我将介绍下如何结合Github来备份和恢复你的博客。  </p>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>这里的前提是你已经搭建好了自己的博客，所以默认你已经安装配置好了git和Github环境；同时，Hexo博客也已经本地搭建配置好了。</p>
+<h2 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h2><p>我是将自己的博客挂载在Github Page上面，已经有一个同名仓库用来存放自己的站点静态文件（但是没有博客环境配置，因此还需要备份），所以没必要新建一个仓库来存放博客备份，只需要在这个仓库建立一个分支即可。为了简便，其实可以另建一个仓库来进行。</p>
+<ol>
+<li><p>首先克隆远程仓库</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@github.com:yourGithubID/yourGithubID.github.io.git</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建一个空白分支并删除原来的文件  </p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> yourGithubID.github.io</span><br><span class="line">git checkout --ophan BackUp <span class="comment">#创建新分支BackUp</span></span><br><span class="line">git rm -rf . <span class="comment"># 删除所有文件</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将原有博客的内容全部拷贝到这个文件夹，如果是手动复制，请注意隐藏文件夹和文件  </p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -a yourBlogPath/. ./ <span class="comment"># 注意是用.而非*, 如果是*的话， 无法复制隐藏文件和文件夹</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除主题目录下.git(./themes/next/.git)文件，否则后面push到github上面时候会出错，如果喜欢折腾的话也可以将主题文件夹用<a href="https://git-scm.com/book/zh/v1/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97" target="_blank" rel="noopener">子模块</a>的方式添加;</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf themes/next/.git</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑.gitignore文件  </p>
+<p> Hexo站点文件以及是否需要备份说明如下:</p>
+ <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">_config.yml站点的配置文件，需要拷贝；</span></span><br><span class="line"><span class="string">themes/主题文件夹，需要拷贝；</span></span><br><span class="line"><span class="string">source</span> <span class="string">博客文章的</span> <span class="string">.md</span> <span class="string">文件，需要拷贝；</span></span><br><span class="line"><span class="string">scaffolds/</span> <span class="string">文章的模板，需要拷贝；</span></span><br><span class="line"><span class="string">package.json</span> <span class="string">安装包的名称，需要拷贝；</span></span><br><span class="line"><span class="string">.gitignore</span> <span class="string">限定在</span> <span class="string">push</span> <span class="string">时哪些文件可以忽略，需要拷贝；</span></span><br><span class="line"><span class="string">.git/</span> <span class="string">主题和站点都有，标志这是一个</span> <span class="string">git</span> <span class="string">项目，不需要拷贝；</span></span><br><span class="line"><span class="string">node_modules/</span> <span class="string">是安装包的目录，在执行</span> <span class="string">npm</span> <span class="string">install</span> <span class="string">的时候会重新生成，不需要拷贝；</span></span><br><span class="line"><span class="string">public</span> <span class="string">是</span> <span class="string">hexo</span> <span class="string">g</span> <span class="string">生成的静态网页，不需要拷贝；</span></span><br><span class="line"><span class="string">.deploy_git</span> <span class="string">同上，hexo</span> <span class="string">g</span> <span class="string">也会生成，不需要拷贝；</span></span><br><span class="line"><span class="string">db.json文件，不需要拷贝。</span></span><br></pre></td></tr></table></figure>
+
+<p> 因此, 编辑.gitignore文件(没有的话自己建立一个), 将不需要备份的文件屏蔽, 建议的文件内容如下:  </p>
+ <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">.DS_Store</span></span><br><span class="line"><span class="string">Thumbs.db</span></span><br><span class="line"><span class="string">db.json</span></span><br><span class="line"><span class="string">*.log</span></span><br><span class="line"><span class="string">node_modules/</span></span><br><span class="line"><span class="string">public/</span></span><br><span class="line"><span class="string">.deploy*/</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>备份</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"1st BackUp"</span> <span class="comment">#本地提交</span></span><br><span class="line">git push origin BackUp <span class="comment"># 提交到github 仓库</span></span><br></pre></td></tr></table></figure>
+
+<p> 这样, github上面就有了一个干净的备份分支<code>BackUp</code>。接下来,去Github上面, 将默认分支设置成<code>BackUp</code>: <strong>Setting -&gt; Branches -&gt; Default branch -&gt; update</strong>, 这样有助于后面恢复博客.  </p>
+<p> 这样下次备份的时候就更加方便, 只要执行下面指令</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"Messages you want to commit"</span></span><br><span class="line">git push origin BackUp</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h2><ol>
+<li>安装git并配置  </li>
+<li>安装Nodejs和npm</li>
+<li>克隆项目到本地</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@github.com:yourGithubID/yourGithubID.github.io.git</span><br></pre></td></tr></table></figure>
+
+<p>.</p>
+<ol start="4">
+<li>[选做]安装<code>hexo</code>环境  </li>
+</ol>
+<p><strong>这一步不是必须的，当你这台电脑之前没有安装hexo才需要执行这条命令</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure>
+
+<p>.</p>
+<ol start="5">
+<li>在克隆的文件夹下面, 输入如下命令来恢复博客:  </li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<p>因为我们备份了<code>packadge.json</code>文件，上诉命令会直接安装里面<code>dependencies</code> 和<code>DevDependecies</code>里面的插件， 安装完之后可以试运行看看是否备份成功。如果提示<code>hexo command not found</code> ，可单独安装hexo，<code>npm install -g hexo</code>.  
+不需要这行<code>hexo init</code>指令, 因为并不是从零开始搭建博客.</p>
+<h2 id="npm-安装小知识"><a href="#npm-安装小知识" class="headerlink" title="npm 安装小知识"></a>npm 安装小知识</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">npm install packageName <span class="comment">#本地安装，安装到项目目录下，不在package.json中写入依赖</span></span><br><span class="line">npm install packageName -g <span class="comment">#全局安装，安装在Node安装目录下的node_modules下</span></span><br><span class="line">npm install packageName --save <span class="comment">#安装到项目目录的node_modules下，并在package.json文件的dependencies中写入依赖，简写为-S</span></span><br><span class="line">npm install packageName --save-dev <span class="comment">#安装到项目目录下，并在package.json文件的devDependencies中写入依赖，简写为-D</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 如果目录下有package.json 文件</span></span><br><span class="line">npm install <span class="comment"># 自动批量安装dependencies 和 devDependencies中的包</span></span><br><span class="line">npm install --production <span class="comment"># 只安装dependencies中的包</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 卸载更新</span></span><br><span class="line">npm uninstall -g &lt;package&gt; <span class="comment"># 删除某个全局包</span></span><br><span class="line">npm updatge -g <span class="comment">#更新全部全局包</span></span><br><span class="line">npm update -g &lt;package&gt; <span class="comment">#更新某个包</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><a href="https://blog.itswincer.com/posts/7efd2818/" target="_blank" rel="noopener">Hexo 博客备份</a>  </li>
+<li><a href="https://lrscy.github.io/2018/01/26/Hexo-Github-Backup/" target="_blank" rel="noopener">在Github上备份Hexo博客</a>  </li>
+<li><a href="https://blog.csdn.net/zs634134578/article/details/9183705" target="_blank" rel="noopener">git 创建一个空分支</a></li>
+<li><a href="https://blog.csdn.net/top_code/article/details/51931916" target="_blank" rel="noopener">Github中创建新分支</a></li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/备份恢复/" rel="tag"># 备份恢复</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/hexoConfigNotes.html" rel="next" title="hexo博客配置笔记">
+                <i class="fa fa-chevron-left"></i> hexo博客配置笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/soBeautifulUr.html" rel="prev" title="So beautiful you are, my darling~">
+                So beautiful you are, my darling~ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">h_chaos</p>
+              <div class="site-description motion-element" itemprop="description">Kill me, or live in the shadow of mine.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/blog/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/blog/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/blog/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/chaos-h/" title="GitHub &rarr; https://github.com/chaos-h/" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:shanzhonghai@foxmail.com" title="E-Mail &rarr; mailto:shanzhonghai@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#备份"><span class="nav-text">备份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#恢复"><span class="nav-text">恢复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#npm-安装小知识"><span class="nav-text">npm 安装小知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">h_chaos</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/blog/js/utils.js?v=7.1.1"></script>
+
+  <script src="/blog/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/blog/js/affix.js?v=7.1.1"></script>
+
+  <script src="/blog/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+
+  
+  <script src="/blog/js/scrollspy.js?v=7.1.1"></script>
+<script src="/blog/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/blog/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'A3nqoJN4XRTEkJLDQ2kpqE6d-gzGzoHsz',
+    appKey: 'QWws9gkq8RLuObIDPhVevd52',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>
