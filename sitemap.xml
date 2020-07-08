@@ -16,7 +16,7 @@
   </url>
   
   <url>
-    <loc>http://seainm.top/blog/categories/index.html</loc>
+    <loc>http://seainm.top/blog/tags/index.html</loc>
     
     <lastmod>2020-07-03T18:25:06.649Z</lastmod>
     
@@ -30,7 +30,7 @@
   </url>
   
   <url>
-    <loc>http://seainm.top/blog/tags/index.html</loc>
+    <loc>http://seainm.top/blog/categories/index.html</loc>
     
     <lastmod>2020-07-03T18:25:06.649Z</lastmod>
     
@@ -38,13 +38,6 @@
   
   <url>
     <loc>http://seainm.top/blog/shellLearningNotes.html</loc>
-    
-    <lastmod>2020-07-03T18:25:06.648Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://seainm.top/blog/MissU.html</loc>
     
     <lastmod>2020-07-03T18:25:06.648Z</lastmod>
     
@@ -72,21 +65,14 @@
   </url>
   
   <url>
-    <loc>http://seainm.top/blog/blogBackupAndRestore.html</loc>
-    
-    <lastmod>2020-07-03T18:25:06.647Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://seainm.top/blog/soBeautifulUr.html</loc>
-    
-    <lastmod>2020-07-03T18:25:06.647Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://seainm.top/blog/hexoConfigNotes.html</loc>
+    
+    <lastmod>2020-07-03T18:25:06.647Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://seainm.top/blog/blogBackupAndRestore.html</loc>
     
     <lastmod>2020-07-03T18:25:06.647Z</lastmod>
     
@@ -122,13 +108,6 @@
   
   <url>
     <loc>http://seainm.top/blog/hexoBlogEncrypt.html</loc>
-    
-    <lastmod>2020-07-03T18:25:06.644Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://seainm.top/blog/heySilly.html</loc>
     
     <lastmod>2020-07-03T18:25:06.644Z</lastmod>
     
